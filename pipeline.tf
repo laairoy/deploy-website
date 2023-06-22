@@ -35,7 +35,7 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "codepipeline_role" {
-  name               = "test-role"
+  name               = "codepipeline_role"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -64,17 +64,6 @@ data "aws_iam_policy_document" "codepipeline_policy" {
     actions   = ["codestar-connections:UseConnection"]
     resources = [data.aws_codestarconnections_connection.github.arn]
   }
-
-  statement {
-    effect = "Allow"
-
-    actions = [
-      "codebuild:BatchGetBuilds",
-      "codebuild:StartBuild",
-    ]
-
-    resources = ["*"]
-  }
 }
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
@@ -83,15 +72,15 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
   policy = data.aws_iam_policy_document.codepipeline_policy.json
 }
 
-resource "time_sleep" "wait_30_seconds" {
+resource "time_sleep" "wait_10_seconds" {
   depends_on = [aws_iam_role_policy.codepipeline_policy]
 
   create_duration = "10s"
 }
 
 resource "aws_codepipeline" "codepipeline" {
-  depends_on = [time_sleep.wait_30_seconds]
-  name       = "tf-test-pipeline"
+  depends_on = [time_sleep.wait_10_seconds]
+  name       = "tf-pipeline-s3-deploy"
   role_arn   = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
