@@ -16,3 +16,11 @@ provider "aws" {
     tags = local.common_tags
   }
 }
+
+provider "aws" {
+  alias  = "n_virginia"
+  region = var.cloudFront_region
+  default_tags {
+    tags = local.common_tags
+  }
+}

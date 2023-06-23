@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "bucket-website" {
-  bucket        = "www.laai.com.br"
+  bucket        = local.domain_name.domain
   force_destroy = true
 }
 
@@ -43,6 +43,7 @@ resource "aws_s3_bucket_ownership_controls" "bucket_website_acl_ownership" {
     object_ownership = "BucketOwnerPreferred"
   }
 }
+
 resource "aws_s3_bucket_public_access_block" "access_block" {
   bucket = aws_s3_bucket.bucket-website.id
 
