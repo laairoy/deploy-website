@@ -24,3 +24,19 @@ provider "aws" {
     tags = local.common_tags
   }
 }
+
+module "bucket" {
+  source = "git@github.com:laairoy/terraform-s3-bucket.git"
+
+  bucket        = "laai.com.br"
+  force_destroy = true
+  public_access = true
+
+  website = {
+    //index_document = "index.html"
+    redirect = {
+      host_name = "www.laai.com.br"
+      protocol  = "https"
+    }
+  }
+}
