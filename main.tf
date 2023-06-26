@@ -40,3 +40,17 @@ module "bucket" {
     }
   }
 }
+
+module "cf_distribution" {
+  source = "./modules/cf_s3_distribution"
+  origin = {
+    origin_id = module.bucket.bucket_website_name
+    //origin_access_control_id = aws_cloudfront_origin_access_control.cf_origin.id
+    domain_name = module.bucket.bucket_website_endpoint
+  }
+
+  //default_root_object = "index.html"
+  aliases             = [module.bucket.bucket_website_name]
+  acm_certificate_arn = aws_acm_certificate.cert.arn
+}
+
