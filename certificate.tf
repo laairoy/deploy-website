@@ -1,7 +1,7 @@
 resource "aws_acm_certificate" "cert" {
   provider                  = aws.n_virginia
-  domain_name               = "laai.com.br"
-  subject_alternative_names = ["*.laai.com.br"]
+  domain_name               = var.domain_name
+  subject_alternative_names = ["*.${var.domain_name}"]
   validation_method         = "DNS"
 
   lifecycle {

@@ -21,7 +21,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   //comment             = ""
   default_root_object = "index.html"
 
-  aliases = ["${local.domain_name.domain}"]
+  aliases = ["www.${var.domain_name}"]
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]

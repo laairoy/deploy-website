@@ -28,14 +28,14 @@ provider "aws" {
 module "bucket" {
   source = "git@github.com:laairoy/terraform-s3-bucket.git"
 
-  bucket        = "laai.com.br"
+  bucket        = var.domain_name
   force_destroy = true
   public_access = true
 
   website = {
     //index_document = "index.html"
     redirect = {
-      host_name = "www.laai.com.br"
+      host_name = "www.${var.domain_name}"
       protocol  = "https"
     }
   }
