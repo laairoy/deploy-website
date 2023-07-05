@@ -54,8 +54,8 @@ data "aws_iam_policy_document" "codepipeline_policy" {
     resources = [
       aws_s3_bucket.codepipeline_bucket.arn,
       "${aws_s3_bucket.codepipeline_bucket.arn}/*",
-      aws_s3_bucket.bucket-website.arn,
-      "${aws_s3_bucket.bucket-website.arn}/*",
+      module.bucket_www.bucket_website_arn,
+      "${module.bucket_www.bucket_website_arn}/*",
     ]
   }
 
@@ -120,7 +120,7 @@ resource "aws_codepipeline" "codepipeline" {
       version         = "1"
 
       configuration = {
-        BucketName = aws_s3_bucket.bucket-website.bucket
+        BucketName = module.bucket_www.bucket_website_name 
         Extract    = "true"
       }
     }
